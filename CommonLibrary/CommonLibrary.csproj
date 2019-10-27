@@ -51,6 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binary\BinaryBuffer.cs" />
+    <Compile Include="Binary\BinaryUtility.cs" />
+    <Compile Include="Binary\IBinarySerializer.cs" />
+    <Compile Include="Threading\IThreadStatusListener.cs" />
+    <Compile Include="Threading\ThreadPrototype.cs" />
+    <Compile Include="Threading\CustomThread.cs" />
+    <Compile Include="Threading\CustomTimer.cs" />
     <Compile Include="Utility\AESCipher.cs" />
     <Compile Include="Database\Data\DbSqlParameter.cs" />
     <Compile Include="Database\Data\DbSqlCommand.cs" />

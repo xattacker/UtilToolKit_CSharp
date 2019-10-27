@@ -24,11 +24,11 @@ namespace Xattacker.Utility.Except
 
         #region data member related function
 
-        public ErrorId ErrorId { private set; get; }
+        public ErrorId ErrorId { get; private set; }
 
-        public Type ThrownType { private set; get; }
+        public Type ThrownType { get; private set; }
 
-        public Exception OriginalException { private set; get; }
+        public Exception OriginalException { get; private set; }
 
         public string ErrorDescription
         {
