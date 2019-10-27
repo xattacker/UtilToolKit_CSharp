@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Xattacker.Binary
+namespace Xattacker.Utility.Binary
 {
     public interface IBinarySerializer
     {

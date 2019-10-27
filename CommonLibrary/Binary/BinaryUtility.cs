@@ -7,7 +7,7 @@ using System.Text;
 
 using Xattacker.Utility.Except;
 
-namespace Xattacker.Binary
+namespace Xattacker.Utility.Binary
 {
     public class BinaryUtility
     {

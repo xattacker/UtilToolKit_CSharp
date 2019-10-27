@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Xattacker.Utility.Json
 {
-    interface IJsonSerializer
+    public interface IJsonSerializer
     {
         string ToJson();
 
