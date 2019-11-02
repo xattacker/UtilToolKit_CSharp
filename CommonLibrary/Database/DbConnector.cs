@@ -6,7 +6,7 @@ using System.Data.Common;
 using Xattacker.Database.Data;
 using Xattacker.Utility.Except;
 
-namespace Xattacker.Database
+namespace Xattacker.Utility.Database
 {
     public enum DBModuleType : short
     {
@@ -44,18 +44,18 @@ namespace Xattacker.Database
 	        this.IsConnected = false;
 	    }
 
-	    public DbConnector(DbConnector config)
+	    public DbConnector(DbConnector connector)
 	    {
-            this.DBType = config.DBType;
-	        this.Name = config.Name;
+            this.DBType = connector.DBType;
+	        this.Name = connector.Name;
 
-	        this.Account = config.Account;
-	        this.Password = config.Password;
-	        this.Host = config.Host;
-            this.DBName = config.DBName;
-            this.MaxPoolSize = config.MaxPoolSize;
+	        this.Account = connector.Account;
+	        this.Password = connector.Password;
+	        this.Host = connector.Host;
+            this.DBName = connector.DBName;
+            this.MaxPoolSize = connector.MaxPoolSize;
 
-            this.db = this.CreateDB(config.DBType);
+            this.db = this.CreateDB(connector.DBType);
 	        this.IsConnected = false;
 	    }
 

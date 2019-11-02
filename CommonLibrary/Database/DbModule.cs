@@ -5,10 +5,12 @@ using System.Data.Common;
 
 using Xattacker.Database.Data;
 
-namespace Xattacker.Database
+namespace Xattacker.Utility.Database
 {
     public abstract class DbModule
     {
+        #region public function
+
         public bool ExecCommand(string sql)
         {
             bool result = false;
@@ -352,6 +354,8 @@ namespace Xattacker.Database
             return table;
         }
 
+        #endregion
+
 
         #region abstract function
 
@@ -361,6 +365,13 @@ namespace Xattacker.Database
         string dbName,
         string account,
         string password,
+        int maxPoolSize
+        );
+
+        public abstract bool InitConnectBuilderByWinAuth
+        (
+        string host,
+        string dbName,
         int maxPoolSize
         );
 

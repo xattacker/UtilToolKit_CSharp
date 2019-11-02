@@ -7,7 +7,7 @@ using System.Text;
 
 using Xattacker.Database.Data;
 
-namespace Xattacker.Database
+namespace Xattacker.Utility.Database
 {
     public sealed class MSSQLModule : DbModule
     {
@@ -28,7 +28,7 @@ namespace Xattacker.Database
         #endregion
 
 
-        #region implement from IXDB
+        #region implement from DbModule
 
         public override bool InitConnectBuilder
         (
@@ -44,6 +44,21 @@ namespace Xattacker.Database
             this.builder.InitialCatalog = dbName;
             this.builder.UserID = account;
             this.builder.Password = password;
+
+            return true;
+        }
+
+        public override bool InitConnectBuilderByWinAuth
+        (
+        string host,
+        string dbName,
+        int maxPoolSize
+        )
+        {
+            this.builder = new SqlConnectionStringBuilder();
+            this.builder.DataSource = host;
+            this.builder.InitialCatalog = dbName;
+            this.builder.IntegratedSecurity = true;
 
             return true;
         }

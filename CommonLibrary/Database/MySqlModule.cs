@@ -8,8 +8,9 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 
 using Xattacker.Database.Data;
+using Xattacker.Utility.Except;
 
-namespace Xattacker.Database
+namespace Xattacker.Utility.Database
 {
     public sealed class MySqlModule : DbModule
     {
@@ -30,7 +31,7 @@ namespace Xattacker.Database
         #endregion
 
 
-        #region implement from IXDB
+        #region implement from DbModule
 
         public override bool InitConnectBuilder
         (
@@ -48,6 +49,16 @@ namespace Xattacker.Database
             this.builder.Password = password;
 
             return true;
+        }
+
+        public override bool InitConnectBuilderByWinAuth
+        (
+        string host,
+        string dbName,
+        int maxPoolSize
+        )
+        {
+            throw new CustomException(ErrorId.UNSUPPORTED, this.GetType());
         }
 
         public override bool ResetConnectBuilder()
