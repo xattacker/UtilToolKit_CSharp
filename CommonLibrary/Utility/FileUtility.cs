@@ -178,6 +178,57 @@ namespace Xattacker.Utility
 
             return str;
         }
+
+        /// <summary>
+        ///  delete files from path completely, include sub paths
+        /// </summary>
+        /// <param name="path"> destination folder </param>
+        public static void DeleteDirectoryCompletely(string path)
+        {
+            string[] files = Directory.GetFiles(path);
+            foreach (string s in files)
+            {
+                File.Delete(s);
+            }
+
+            string[] dirs = Directory.GetDirectories(path);
+            foreach (string d in dirs)
+            {
+                DeleteDirectoryCompletely(d);
+            }
+
+            Directory.Delete(path);
+        }
+
+        /// <summary>
+        ///  copy files from one folder to another folder completely
+        /// </summary>
+        /// <param name="sourcePath"> source folder </param>
+        /// <param name="destinationPath"> destination folder </param>
+        public static void CopyFiles(string sourcePath, string destinationPath)
+        {
+            if (!Directory.Exists(destinationPath))
+            {
+                Directory.CreateDirectory(destinationPath);
+            }
+
+            string[] files = Directory.GetFiles(sourcePath);
+            foreach (string s in files)
+            {
+                // Use static Path methods to extract only the file name from the path.
+                string fileName = Path.GetFileName(s);
+                string destFile = Path.Combine(destinationPath, fileName);
+                File.Copy(s, destFile, true);
+            }
+
+            string[] dirs = Directory.GetDirectories(sourcePath);
+            foreach (string d in dirs)
+            {
+                string d_name = Path.GetFileName(d);
+                string destD = Path.Combine(destinationPath, d_name);
+                CopyFiles(d, destD);
+            }
+        }
     }
 
 
@@ -202,6 +253,21 @@ namespace Xattacker.Utility
         public static string GetFileSizeStr(this FileInfo file)
         {
             return FileUtility.GetFileSizeStr(file.FullName);
+        }
+
+        public static void DeleteCompletely(this DirectoryInfo dir)
+        {
+            FileUtility.DeleteDirectoryCompletely(dir.FullName);
+        }
+
+        public static void CopyFiles(this DirectoryInfo dir, string destinationPath)
+        {
+            FileUtility.CopyFiles(dir.FullName, destinationPath);
+        }
+
+        public static void CopyFiles(this DirectoryInfo dir, DirectoryInfo destinationDir)
+        {
+            FileUtility.CopyFiles(dir.FullName, destinationDir.FullName);
         }
     }
 }
