@@ -71,6 +71,7 @@
     <Compile Include="Json\IJsonSerializer.cs" />
     <Compile Include="Json\JsonUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ChineseConverter.cs" />
     <Compile Include="Utility\DateTimeUtility.cs" />
     <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="Utility\GUID.cs" />
