@@ -79,6 +79,7 @@
     <Compile Include="Utility\MD5Codec.cs" />
     <Compile Include="Utility\MimeCodec.cs" />
     <Compile Include="Utility\StringExtension.cs" />
+    <Compile Include="Utility\StringUtility.cs" />
     <Compile Include="Utility\WeakReferenceBox.cs" />
   </ItemGroup>
   <ItemGroup />
