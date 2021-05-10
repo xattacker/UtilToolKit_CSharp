@@ -164,7 +164,7 @@ namespace Xattacker.Utility.Binary
 
         public bool Available
         {
-            get => this.stream.Length > 0;
+            get => this.stream.CanRead;
         }
 
         public byte[] ReadBinary(int length)
