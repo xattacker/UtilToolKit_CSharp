@@ -9,7 +9,7 @@ namespace Xattacker.Utility.Binary
     /// <summary>
     ///  the class which handles binary data
     /// </summary>
-    public class BinaryBuffer
+    public class BinaryBuffer : IBinaryReadable, IBinaryWritable<BinaryBuffer>
     {
         #region data member
 
@@ -89,6 +89,16 @@ namespace Xattacker.Utility.Binary
 
         #region public function
 
+        public long Length
+        {
+            get => this.stream.Length;
+        }
+
+        public bool IsEmpty
+        {
+            get => this.stream.Length == 0;
+        }
+
         public byte[] GetData()
         {
             if (this.stream is MemoryStream)
@@ -97,16 +107,6 @@ namespace Xattacker.Utility.Binary
             }
 
             throw new CustomException(ErrorId.UNSUPPORTED, GetType());
-        }
-
-        public long GetLength()
-        {
-            return this.stream.Length;
-        }
-
-        public bool IsEmpty()
-        {
-            return this.stream.Length == 0;
         }
 
         public void Clear()
@@ -160,13 +160,11 @@ namespace Xattacker.Utility.Binary
         #endregion
 
 
-        #region binary related function
+        #region implement from IBinaryReadable
 
-        public BinaryBuffer WriteBinary(byte[] data, int offset, int length)
+        public bool Available
         {
-            this.stream.Write(data, offset, length);
-            
-            return this;
+            get => this.stream.Length > 0;
         }
 
         public byte[] ReadBinary(int length)
@@ -177,38 +175,12 @@ namespace Xattacker.Utility.Binary
             return data;
         }
 
-        #endregion
-
-
-        #region short related function
-
-        public BinaryBuffer WriteShort(short value)
-        {
-            byte[] data = BitConverter.GetBytes(value);
-            this.stream.Write(data, 0, data.Length);
-            
-            return this;
-        }
-
         public short ReadShort()
-        { 
+        {
             byte[] data = new byte[sizeof(short)];
             this.stream.Read(data, 0, data.Length);
 
             return BitConverter.ToInt16(data, 0);
-        }
-
-        #endregion
-
-
-        #region int related function
-
-        public BinaryBuffer WriteInteger(int value)
-        {
-            byte[] data = BitConverter.GetBytes(value);
-            this.stream.Write(data, 0, data.Length);
-            
-            return this;
         }
 
         public int ReadInteger()
@@ -219,38 +191,12 @@ namespace Xattacker.Utility.Binary
             return BitConverter.ToInt32(data, 0);
         }
 
-        #endregion
-
-
-        #region long related function
-
-        public BinaryBuffer WriteLong(long value)
-        {
-            byte[] data = BitConverter.GetBytes(value);
-            this.stream.Write(data, 0, data.Length);
-            
-            return this;
-        }
-
         public long ReadLong()
         {
             byte[] data = new byte[sizeof(long)];
             this.stream.Read(data, 0, data.Length);
 
             return BitConverter.ToInt64(data, 0);
-        }
-
-        #endregion
-
-        
-        #region double related function
-
-        public BinaryBuffer WriteDouble(double value)
-        {
-            byte[] data = BitConverter.GetBytes(value);
-            this.stream.Write(data, 0, data.Length);
-            
-            return this;
         }
 
         public double ReadDouble()
@@ -260,11 +206,64 @@ namespace Xattacker.Utility.Binary
 
             return BitConverter.ToDouble(data, 0);
         }
-        
+
+        public string ReadString()
+        {
+            int length = this.ReadInteger();
+
+            if (length == 0)
+            {
+                return string.Empty;
+            }
+
+            byte[] data = this.ReadBinary(length);
+
+            return Encoding.UTF8.GetString(data, 0, data.Length);
+        }
+
         #endregion
 
 
-        #region string related function
+        #region implement from IBinaryWritable
+
+        public BinaryBuffer WriteBinary(byte[] data, int offset, int length)
+        {
+            this.stream.Write(data, offset, length);
+
+            return this;
+        }
+
+        public BinaryBuffer WriteShort(short value)
+        {
+            byte[] data = BitConverter.GetBytes(value);
+            this.stream.Write(data, 0, data.Length);
+
+            return this;
+        }
+
+        public BinaryBuffer WriteInteger(int value)
+        {
+            byte[] data = BitConverter.GetBytes(value);
+            this.stream.Write(data, 0, data.Length);
+
+            return this;
+        }
+
+        public BinaryBuffer WriteLong(long value)
+        {
+            byte[] data = BitConverter.GetBytes(value);
+            this.stream.Write(data, 0, data.Length);
+
+            return this;
+        }
+
+        public BinaryBuffer WriteDouble(double value)
+        {
+            byte[] data = BitConverter.GetBytes(value);
+            this.stream.Write(data, 0, data.Length);
+
+            return this;
+        }
 
         public BinaryBuffer WriteString(string value)
         {
@@ -282,20 +281,6 @@ namespace Xattacker.Utility.Binary
             }
             
             return this;
-        }
-
-        public string ReadString()
-        {
-            int length = this.ReadInteger();
-
-            if (length == 0)
-            {
-                return string.Empty;
-            }
-
-            byte[] data = this.ReadBinary(length);
-
-            return Encoding.UTF8.GetString(data, 0, data.Length);
         }
 
         #endregion
