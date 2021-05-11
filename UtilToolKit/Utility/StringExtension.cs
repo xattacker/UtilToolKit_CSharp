@@ -16,5 +16,15 @@ namespace Xattacker.Utility
             Array.Reverse(chars);
             return new String(chars);
         }
+
+        public static string ToSimplifiedChinese(this string str)
+        {
+            return ChineseConverter.ToSimplifiedChinese(str);
+        }
+
+        public static string ToTraditionalChinese(this string str)
+        {
+            return ChineseConverter.ToTraditionalChinese(str);
+        }
     }
 }

@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace CommonLibrary.Utility
+namespace Xattacker.Utility
 {
-    public class StringUtility
+    public enum ChineseCharacters
+    {
+        Simplified,
+        Traditional
+    }
+
+
+    /// <summary>
+    /// Chinese Characters Converter
+    /// </summary>
+    public class ChineseConverter
     {
         ///
         /// 使用系統 kernel32.dll 進行轉換
@@ -32,20 +40,30 @@ namespace CommonLibrary.Utility
             LCMapString(LocaleSystemDefault, LcmapTraditionalChinese, source, source.Length, converted, source.Length);
             return converted;
         }
-    }
 
+        private ChineseCharacters characters;
 
-    // string extension function
-    public static class StringExtension
-    {
-        public static string ToSimplifiedChinese(this string str)
+        public ChineseConverter(ChineseCharacters characters)
         {
-            return StringUtility.ToSimplifiedChinese(str);
+            this.characters = characters;
         }
 
-        public static string ToTraditionalChinese(this string str)
+        public string Convert(string source)
         {
-            return StringUtility.ToTraditionalChinese(str);
+            string converted = string.Empty;
+
+            switch (this.characters)
+            {
+                case ChineseCharacters.Traditional:
+                    converted = ToTraditionalChinese(source);
+                    break;
+
+                case ChineseCharacters.Simplified:
+                    converted = ToSimplifiedChinese(source);
+                    break;
+            }
+
+            return converted;
         }
     }
 }

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xattacker.Utility</RootNamespace>
-    <AssemblyName>CommonLibrary</AssemblyName>
+    <AssemblyName>UtilToolKit</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -82,7 +82,6 @@
     <Compile Include="Utility\MD5Codec.cs" />
     <Compile Include="Utility\MimeCodec.cs" />
     <Compile Include="Utility\StringExtension.cs" />
-    <Compile Include="Utility\StringUtility.cs" />
     <Compile Include="Utility\WeakReferenceBox.cs" />
   </ItemGroup>
   <ItemGroup />
